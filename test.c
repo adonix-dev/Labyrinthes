@@ -3,8 +3,8 @@
 
 int main(){
   /* Tests de la création et affichage de matrices */
-  labyrinthe lab1,lab2,lab3;
-
+  labyrinthe /*lab1,lab2,*/lab3;
+/*
   // test1
   lab1 = creerMatrice(4,4, testA1, testIA1, testJA1);
   printf("\nLabyrinthe créé:");
@@ -18,7 +18,7 @@ int main(){
   afficherMatrice(lab2,10,10);
   printf("\nMatrice attendue:");
   printf("\n%s",strMat2());
-
+*/
   //test3
   lab3 = creerMatrice(10,10, testA3, testIA3, testJA3);
   printf("\nLabyrinthe créé\n");
@@ -26,8 +26,17 @@ int main(){
   printf("\nMatrice attendue:");
   printf("\n%s",strMat3());
 
+  coordonnee_t coord;
+  coord.ligne = 0;
+  coord.colonne = 0;
+
+  coordonnee_t * coordPossibles = (coordonnee_t*) malloc(100*sizeof(coordonnee_t));
+
+  deplacementsPossibles(lab3,10,10,coord, coordPossibles);
+
   /* Tests de la vérification et de l'affichage des chemins */
 
+/*
   coordonnee_t * coords = (coordonnee_t*) malloc(100*sizeof(coordonnee_t));
   coordonnee_t coord;
 
@@ -42,12 +51,12 @@ int main(){
   coord.ligne=2;
   coord.colonne=0;
   coords[2]=coord;
-  
+
   coord.ligne=3;
   coord.colonne=0;
   coords[3]=coord;
 
-  
+
   chemin_t ch1;
   ch1.coordonnees=coords;
   ch1.taille=4;
@@ -61,7 +70,7 @@ int main(){
   afficherChemin(ch1);
   printf("\nverification chemin valide: %d", verifierChemin(ch1,lab1,4,4,coord));
   printf("\nvaleur attendue: 1\n");
-  
+
   coord.colonne = 1;
   coords[0]=coord;
 
@@ -87,11 +96,11 @@ int main(){
   printf("\nverification chemin, coordonnees non adjacentes: %d", verifierChemin(ch1,lab1,4,4,coord));
   printf("\nvaleur attendue: 0\n");
 
-  
+
   coords[0]=coord;
   coord.ligne=1;
   coords[1]=coord;
-  
+
   ch1.taille=2;
 
   coord.ligne=0;
@@ -100,8 +109,8 @@ int main(){
   printf("\nverification chemin, mur: %d", verifierChemin(ch1,lab1,4,4,coord));
   printf("\nvaleur attendue: 0\n");
 
+*/
 
-  
-  
+
   return 1;
 }
