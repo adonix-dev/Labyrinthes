@@ -28,11 +28,17 @@ int main(){
 
   coordonnee_t coord;
   coord.ligne = 0;
-  coord.colonne = 0;
+  coord.colonne = 9;
 
-  coordonnee_t * coordPossibles = (coordonnee_t*) malloc(100*sizeof(coordonnee_t));
 
-  deplacementsPossibles(lab3,10,10,coord, coordPossibles);
+
+  coordonnee_t * coordPossibles = (coordonnee_t*)malloc(8*sizeof(coordonnee_t));
+
+  int possibilities = deplacementsPossibles(lab3,10,10,coord, coordPossibles);
+
+  for (int i = 0; i < possibilities; i++) {
+    printf("[%d][%d]\n", coordPossibles[i].ligne, coordPossibles[i].colonne);
+  }
 
   /* Tests de la vérification et de l'affichage des chemins */
 

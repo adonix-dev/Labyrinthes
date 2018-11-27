@@ -21,32 +21,23 @@ void afficherMatrice( labyrinthe lab, unsigned int lignes, unsigned int colonnes
   }
 }
 
-int isOnMap(int x, int y, unsigned int largeur, unsigned int longueur){
-  //printf("%d %d %d %d\n", x, y, largeur, longueur);
-  return (x>=0 && y >= 0 && x < largeur && y < longueur);
-}
-
 int deplacementsPossibles( labyrinthe lab, unsigned int largeur, unsigned int longueur, coordonnee_t posCourante, coordonnee_t* coordPossibles){
-  int testor[16] = {-1,-1, 0,-1, 1,1, 0,1, 1,-1, 1,0, -1,1, 0,-1};
 
-  for (int i = 0; i < 16; i++) {
-    printf("%d", testor[i]);
-  }
-  printf("\n");
+  int testor[16] = {-1,-1, 0,-1, 1,-1, 1,0, 1,1, 0,1, -1,1, -1,0};
+  int possibilities = 0;
 
   for (int i = 0; i < 16-1; i = i+2) {
 
-      int posX = testor[i] + posCourante.ligne;
-      int posY = testor[i+1] + posCourante.colonne;
+      int posX = testor[i] + posCourante.colonne;
+      int posY = testor[i+1] + posCourante.ligne;
 
-      if(isOnMap(posX, posY, largeur, longueur)){
-        printf("[%d][%d]\n", posX, posY);
-        if(lab[posX][posY] == 0){
-
-        }
+      if(x >= 0 && y >= 0 && x < largeur && y < longueur && lab[posY][posX] == 0){
+        coordPossibles[possibilities].colonne = posX;
+        coordPossibles[possibilities].ligne = posY;
+        ++possibilities;
       }
   }
-  return 0;
+  return possibilities;
 }
 
 /*
