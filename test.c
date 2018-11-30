@@ -25,9 +25,8 @@ int main(){
   afficherMatrice(lab3,10,10);
   printf("\nMatrice attendue:");
   printf("\n%s",strMat3());
-  
-  /* Tests de la vérification et de l'affichage des chemins */
 
+  /* Tests de la vérification et de l'affichage des chemins */
 
   coordonnee_t * coords = (coordonnee_t*) malloc(100*sizeof(coordonnee_t));
   coordonnee_t coord;
@@ -60,6 +59,7 @@ int main(){
   afficherMatrice(lab1,4,4);
   printf("\nChemin:");
   afficherChemin(ch1);
+  //deplacementsPossibles(lab1, 4, 4, coord, coords);
   printf("\nverification chemin valide: %d", verifierChemin(ch1,lab1,4,4,coord));
   printf("\nvaleur attendue: 1\n");
 
@@ -101,8 +101,21 @@ int main(){
   printf("\nverification chemin, mur: %d", verifierChemin(ch1,lab1,4,4,coord));
   printf("\nvaleur attendue: 0\n");
 
+/*
+  coord.ligne = 0;
+  coord.colonne = 1;
 
+  char longueur = 10;
+  char largeur = 10;
 
+  labyrinthe M2 = malloc(longueur*sizeof(char*));
+  for (char i = 0; i < longueur; i++) {
+    M2[(int)i] = malloc(largeur*sizeof(char));
+    for (char j = 0; j < largeur; j++) M2[(int)i][(int)j] = longueur*largeur;
+  }
 
+  plusCourtCheminDynamique(lab3, M2, 10, 10, coord);
+
+*/
   return 1;
 }
