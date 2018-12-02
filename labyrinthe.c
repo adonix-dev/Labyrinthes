@@ -121,7 +121,7 @@ chemin_t calculerChemin(labyrinthe lab, labyrinthe M2, unsigned int largeur, uns
   return ch;
 }
 
-chemin_t plusCourtCheminDynamique ( labyrinthe lab, labyrinthe M2, unsigned int largeur, unsigned int longueur, coordonnee_t depart){
+chemin_t plusCourtCheminDynamique(labyrinthe lab, labyrinthe M2, unsigned int largeur, unsigned int longueur, coordonnee_t depart){
 
   coordonnee_t sortie;
 
@@ -137,9 +137,26 @@ chemin_t plusCourtCheminDynamique ( labyrinthe lab, labyrinthe M2, unsigned int 
 
 }
 
+chemin_t* tousPlusCourtsChemins_rec(labyrinthe lab, labyrinthe M2, unsigned int largeur, unsigned int longueur, coordonnee_t current, chemin_t* ch_tab, int ch_num){
+
+  printf("Pseudo code en commentaire\n");
+
+  /*
+  * - Explorer les possibilitees de mouvement depuis une coordonnee "current"
+  * tel que celle ci est une valeur dans M2 qui soit la valeur de la coordonnee courante - 1.
+  * - Chaque possibilitees cree un nouveau chemin qu'on alloue dans "ch_tab" et qu'on numérote.
+  * - On prend le soin de recopier les cases passées dans le nouveau chemin.
+  * - Quand on avance à une case suivante on l'ajoute au chemin "ch_num" correspondant.
+  * - On s'arrete quand on arrive à la case de depart du labyrinthe, c'est à dire 0 dans M2.
+  */
+  return (ch_tab);
+
+}
+
 chemin_t* tousPlusCourtsChemins(labyrinthe lab, labyrinthe M2, unsigned int largeur, unsigned int longueur, coordonnee_t depart){
 
   coordonnee_t sortie;
+  chemin_t* ch_tab = (chemin_t*)malloc(largeur*longueur*sizeof(coordonnee_t));
 
   int tmp = depart.colonne;       //
   depart.colonne = depart.ligne;  //   Correctif
@@ -149,7 +166,10 @@ chemin_t* tousPlusCourtsChemins(labyrinthe lab, labyrinthe M2, unsigned int larg
 
   explorer(lab, M2, largeur, longueur, depart, M2[depart.colonne][depart.ligne]-1, &sortie);
 
-  printf("sortie: [%d][%d]\n", sortie.ligne, sortie.colonne);
+  printf("Sortie du labyrinthe: [%d][%d]\n", sortie.colonne, sortie.ligne);
 
+  tousPlusCourtsChemins_rec(lab, M2, largeur, longueur, sortie, ch_tab, 0);
+
+  return ch_tab;
 
 }
