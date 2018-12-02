@@ -1,4 +1,10 @@
 /*Labyrinthe.c*/
+/* * * * * * * * * * * * * * * * * * * *
+ * LAGET Antony                        *
+ * TPA12                               *
+ * Dimanche 2 Décembre 2018            *
+ * github.com/adonix-dev/Labyrinthes   *
+ * * * * * * * * * * * * * * * * * * * */
 
 #include "labyrinthe.h"
 #include <stdbool.h>
