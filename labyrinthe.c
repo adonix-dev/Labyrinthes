@@ -46,10 +46,6 @@ int deplacementsPossibles( labyrinthe lab, unsigned int largeur, unsigned int lo
         ++possibilities;
       }
   }
-  //printf("%d %d\n", posCourante.ligne, posCourante.colonne);
-  for (int i = 0; i < possibilities; i++) {
-  //  printf("[%d][%d]\n", coordPossibles[i].ligne, coordPossibles[i].colonne);
-  }
   return possibilities;
 }
 
@@ -61,60 +57,93 @@ void afficherChemin( chemin_t ch ){
 
 char verifierChemin(chemin_t ch, labyrinthe lab, unsigned int largeur, unsigned int longueur, coordonnee_t depart){
 
-  char is_ok = 0;
-
   if((ch.coordonnees[0].ligne == depart.ligne && ch.coordonnees[0].colonne == depart.colonne)){ //Le Premiere saut du chemin est le meme que le point de depart
+    char is_ok = 0;
     for (int s = 0; s < ch.taille; s++) {
       switch (lab[ch.coordonnees[s].ligne][ch.coordonnees[s].colonne]) {
         case 0:                   //Le saut est un passage possbile
           if (abs(ch.coordonnees[s+1].ligne-ch.coordonnees[s].ligne) <= 1 && abs(ch.coordonnees[s+1].colonne-ch.coordonnees[s].colonne) <= 1) //Le prochain saut est adjacente
             is_ok = 1;
-          else  return 0;  break;
-        case 1: return 0;  break; //Le saut n'est pas un mur
-        case 2: return 1;  break; //Le saut est la sortie
+          else  return 0; break;
+        case 1: return 0; break; //Le saut n'est pas un mur
+        case 2: return 1; break; //Le saut est la sortie
       }
     }
     return is_ok;
   }
-  else return false;
+  return false;
 }
 
 /*Seconde partie*/
-/*
-coordonnee_t explorer(labyrinthe lab, labyrinthe M2, char largeur, char longueur, coordonnee_t current, char current_value){
-  afficherMatrice(M2, 10, 10);
-  if(lab[current.ligne][current.colonne] == 2){
-    printf("Sortie\n");
-    M2[current.ligne][current.colonne]++;
-    return current;
-  }
+
+/*usleep(500000);
+clearScreen();
+afficherMatrice(M2, longueur, largeur);*/
+//printf("[%d][%d]: %d\n", current.ligne, current.colonne,lab[current.colonne][current.ligne]);
+
+void explorer(labyrinthe lab, labyrinthe M2, char largeur, char longueur, coordonnee_t current, int current_value, coordonnee_t* out){
+  M2[current.colonne][current.ligne] = current_value + 1;
+  if(lab[current.colonne][current.ligne] == 2) *out = current; //On remonte la sortie du labyrinthe
   else{
     coordonnee_t coordPossibles[8];
-    int possibilities = deplacementsPossibles(lab, largeur, longueur, current, coordPossibles);
-    for (int i = 0; i < possibilities; i++) {
-      printf("[%d][%d] : %d\n", coordPossibles[i].ligne, coordPossibles[i].colonne, lab[coordPossibles[i].colonne][coordPossibles[i].ligne]);
-      //explorer(lab, M2, largeur, longueur, coordPossibles[i], M2[current.ligne][current.colonne]);
-    }
+    for (int i = 0; i < deplacementsPossibles(lab, largeur, longueur, current, coordPossibles); i++)
+      if(M2[coordPossibles[i].colonne][coordPossibles[i].ligne] > M2[current.colonne][current.ligne])
+        explorer(lab, M2, largeur, longueur, coordPossibles[i], M2[current.colonne][current.ligne], out);
   }
+}
 
+chemin_t calculerChemin(labyrinthe lab, labyrinthe M2, unsigned int largeur, unsigned int longueur, coordonnee_t current){
+
+  chemin_t ch;
+  ch.coordonnees = (coordonnee_t*) malloc(largeur*longueur*sizeof(coordonnee_t));
+  ch.taille = M2[current.colonne][current.ligne];
+  int a = ch.taille;
+
+  while (a >= 0) {
+    ch.coordonnees[a].ligne = current.colonne;
+    ch.coordonnees[a].colonne = current.ligne; // Pour affichage (ligne, colonne)
+    coordonnee_t coordPossibles[8];
+    for (int i = 0; i < deplacementsPossibles(lab, largeur, longueur, current, coordPossibles); i++)
+      if(M2[coordPossibles[i].colonne][coordPossibles[i].ligne] == a-1){
+        current = coordPossibles[i];
+        break;
+      }
+    a--;
+  }
+  ch.taille++;
+
+  return ch;
 }
 
 chemin_t plusCourtCheminDynamique ( labyrinthe lab, labyrinthe M2, unsigned int largeur, unsigned int longueur, coordonnee_t depart){
 
-  M2[depart.ligne][depart.colonne] = 0 ;
+  coordonnee_t sortie;
 
-  coordonnee_t out = explorer(lab, M2, largeur, longueur, depart, M2[depart.ligne][depart.colonne]);
+  int tmp = depart.colonne;       //
+  depart.colonne = depart.ligne;  //   Correctif
+  depart.ligne = tmp;             //
 
-  afficherMatrice(M2,10, 10);
-  afficherMatrice(lab, 10, 10);
+  M2[depart.colonne][depart.ligne] = 0;
+
+  explorer(lab, M2, largeur, longueur, depart, M2[depart.colonne][depart.ligne]-1, &sortie);
+
+  return calculerChemin(lab, M2, largeur, longueur, sortie);
 
 }
-*/
 
-
-
-/*
 chemin_t* tousPlusCourtsChemins(labyrinthe lab, labyrinthe M2, unsigned int largeur, unsigned int longueur, coordonnee_t depart){
-  //A faire
+
+  coordonnee_t sortie;
+
+  int tmp = depart.colonne;       //
+  depart.colonne = depart.ligne;  //   Correctif
+  depart.ligne = tmp;             //
+
+  M2[depart.colonne][depart.ligne] = 0;
+
+  explorer(lab, M2, largeur, longueur, depart, M2[depart.colonne][depart.ligne]-1, &sortie);
+
+  printf("sortie: [%d][%d]\n", sortie.ligne, sortie.colonne);
+
+
 }
-*/

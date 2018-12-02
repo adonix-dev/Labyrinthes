@@ -3,7 +3,7 @@
 
 int main(){
   /* Tests de la création et affichage de matrices */
-  labyrinthe lab1,lab2,lab3;
+  labyrinthe lab1,lab2,lab3,lab4;
 
   // test1
   lab1 = creerMatrice(4,4, testA1, testIA1, testJA1);
@@ -25,6 +25,11 @@ int main(){
   afficherMatrice(lab3,10,10);
   printf("\nMatrice attendue:");
   printf("\n%s",strMat3());
+
+  //test4
+  lab4 = creerMatrice(4,6, testA4, testIA4, testJA4);
+  printf("\nLabyrinthe créé\n");
+  afficherMatrice(lab4,4,6);
 
   /* Tests de la vérification et de l'affichage des chemins */
 
@@ -102,20 +107,70 @@ int main(){
   printf("\nvaleur attendue: 0\n");
 
 /*
-  coord.ligne = 0;
-  coord.colonne = 1;
+  coord.ligne = 1; //ligne
+  coord.colonne = 0; //colonne
 
-  char longueur = 10;
-  char largeur = 10;
+  char longueur = 4; //ligne
+  char largeur = 6;   //colonne
 
-  labyrinthe M2 = malloc(longueur*sizeof(char*));
+  labyrinthe M2 = malloc(longueur*sizeof(int*));
+  for (char i = 0; i < longueur; i++) {
+    M2[(int)i] = malloc(largeur*sizeof(int));
+    for (char j = 0; j < largeur; j++) M2[(int)i][(int)j] = longueur*largeur;
+  }
+  afficherMatrice(lab4, longueur, largeur);
+  printf("\nChemin de la matrice LAB4: ");
+  afficherChemin(plusCourtCheminDynamique(lab4, M2, largeur, longueur, coord));
+
+  coord.ligne = 0; //ligne
+  coord.colonne = 0; //colonne
+
+  longueur = 10; //ligne
+  largeur = 10;   //colonne
+
   for (char i = 0; i < longueur; i++) {
     M2[(int)i] = malloc(largeur*sizeof(char));
     for (char j = 0; j < largeur; j++) M2[(int)i][(int)j] = longueur*largeur;
   }
 
-  plusCourtCheminDynamique(lab3, M2, 10, 10, coord);
-
+  afficherMatrice(lab3, longueur, largeur);
+  printf("\nChemin de la matrice LAB3: ");
+  afficherChemin(plusCourtCheminDynamique(lab3, M2, largeur, longueur, coord));
 */
+  coord.ligne = 0; //ligne
+  coord.colonne = 0; //colonne
+
+  char longueur = 10; //ligne
+  char largeur = 10;   //colonne
+
+  labyrinthe M2 = malloc(longueur*sizeof(int*));
+
+  for (char i = 0; i < longueur; i++) {
+    M2[(int)i] = malloc(largeur*sizeof(char));
+    for (char j = 0; j < largeur; j++) M2[(int)i][(int)j] = longueur*largeur;
+  }
+  afficherMatrice(lab2, longueur, largeur);
+  printf("\nChemin de la matrice LAB2: ");
+  afficherChemin(plusCourtCheminDynamique(lab2, M2, largeur, longueur, coord));
+  afficherMatrice(M2, largeur, longueur);
+  
+  tousPlusCourtsChemins(lab2, M2, largeur, longueur, coord);
+
+/*
+  coord.ligne = 0; //ligne
+  coord.colonne = 0; //colonne
+
+  longueur = 4; //ligne
+  largeur = 4;   //colonne
+
+  for (char i = 0; i < longueur; i++) {
+    M2[(int)i] = malloc(largeur*sizeof(char));
+    for (char j = 0; j < largeur; j++) M2[(int)i][(int)j] = longueur*largeur;
+  }
+  afficherMatrice(lab1, longueur, largeur);
+  printf("\n");
+  printf("Chemin de la matrice LAB1: ");
+  afficherChemin(plusCourtCheminDynamique(lab1, M2, largeur, longueur, coord));
+  */
   return 1;
 }
